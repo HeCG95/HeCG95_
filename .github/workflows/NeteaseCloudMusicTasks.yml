@@ -1,0 +1,35 @@
+name: NeteaseCloudMusicTasks
+on: 
+ schedule:
+    - cron: "30 06 * * *"
+ workflow_dispatch:
+env:
+  TZ: Asia/Shanghai
+
+jobs:
+  NeteaseCloudMusicTasks:
+    runs-on: ubuntu-latest
+    name: NeteaseCloudMusicTasks
+    steps:
+      - name: Checkout 🚀
+        uses: actions/checkout@v2
+        with:
+          repository: 'chen310/NeteaseCloudMusicTasks'
+          branch: main
+      - name: Set up Python 🚀
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.6
+      - name: python cache 🚀
+        uses: actions/cache@v2
+        with:
+          path: "~/.cache/pip"
+          key: "${{ runner.os }}-pip-cache-${{ hashFiles('setup.cfg') }}"
+          restore-keys: |
+            "${{ runner.os }}-pip-cache-NeteaseCloudMusicTasks"
+            "${{ runner.os }}-pip-NeteaseCloudMusicTasks"
+      - name: action 🚀
+        run: |
+          pip install -r requirements.txt
+          wget ${{secrets.NeteaseCloudMusicTasks}} -O config.json
+          python3 index.py

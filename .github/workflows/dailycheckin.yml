@@ -1,0 +1,28 @@
+name: dailycheckin
+on: 
+ workflow_dispatch:
+ schedule:
+    - cron: '00 0 * * *'
+
+jobs:
+  dailycheckin:
+    runs-on: ubuntu-latest
+    name: dailycheckin
+    steps:
+      - name: Set up Python 🚀
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+      - name: python cache 🚀
+        uses: actions/cache@v2
+        with:
+          path: "~/.cache/pip"
+          key: "${{ runner.os }}-pip-cache-${{ hashFiles('setup.cfg') }}"
+          restore-keys: |
+            "${{ runner.os }}-pip-cache-"
+            "${{ runner.os }}-pip-"
+      - name: dailycheckin
+        run: |
+          wget ${{secrets.config}} -O config.json
+          pip install dailycheckin --user
+          dailycheckin
