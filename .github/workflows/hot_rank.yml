@@ -32,8 +32,8 @@ jobs:
       - name: Commit files
         run: |
           git add README.md
-          git config --local user.email "h7ml@qq.com"
-          git config --local user.name "h7ml"
+          git config --local user.email "jacktanger@163.com"
+          git config --local user.name "HeCG95"
           git commit --allow-empty -m ":rocket: Update today's hot rank on $(date)" -a
       - name: Push changes
         uses: ad-m/github-push-action@master
